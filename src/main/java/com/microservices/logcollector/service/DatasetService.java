@@ -14,7 +14,7 @@ public class DatasetService {
 
         FileWriter writer = new FileWriter("dataset.csv");
 
-        writer.write("timestamp,service,event,level,latency,requestId\n");
+        writer.write("timestamp,service,event,level,latency,requestId,error \n");
 
         for (LogEvent log : logs) {
 
@@ -24,7 +24,8 @@ public class DatasetService {
                             log.getEvent() + "," +
                             log.getLevel() + "," +
                             log.getLatency() + "," +
-                            log.getRequestId() + "\n"
+                            log.getRequestId() + "," +
+                            log.getErrorMessage() + "\n"
             );
         }
 
