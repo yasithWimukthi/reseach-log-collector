@@ -36,13 +36,13 @@ public class LogController {
         return logService.getLogs();
     }
 
-    @GetMapping("/export")
+    /*@GetMapping("/export")
     public String exportLogs() throws IOException {
 
         datasetService.export(logService.getLogs());
 
         return "Dataset exported!";
-    }
+    }*/
 
     @GetMapping("/windows")
     public List<List<LogEvent>> getWindows() {
@@ -52,5 +52,15 @@ public class LogController {
     @GetMapping("/dataset")
     public List<FeatureVector> getDataset() {
         return datasetBuilderService.buildDataset();
+    }
+
+    @GetMapping("/export-dataset")
+    public String exportDataset() throws IOException {
+
+        List<FeatureVector> dataset = datasetBuilderService.buildDataset();
+
+        datasetService.export(dataset);
+
+        return "Dataset exported!";
     }
 }
