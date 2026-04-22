@@ -53,7 +53,8 @@ public class FeatureExtractionService {
                 avgLatency,
                 maxLatency,
                 logs.size(),
-                uniqueEvents.size()
+                uniqueEvents.size(),
+                0
         );
     }
 }
