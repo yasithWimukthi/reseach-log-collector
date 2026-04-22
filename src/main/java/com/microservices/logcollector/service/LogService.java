@@ -1,5 +1,6 @@
 package com.microservices.logcollector.service;
 
+import com.microservices.logcollector.model.FeatureVector;
 import com.microservices.logcollector.model.LogEvent;
 import com.microservices.logcollector.storage.LogStorage;
 import lombok.RequiredArgsConstructor;
