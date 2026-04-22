@@ -1,5 +1,6 @@
 package com.microservices.logcollector.service;
 
+import com.microservices.logcollector.model.FeatureVector;
 import com.microservices.logcollector.model.LogEvent;
 import org.springframework.stereotype.Service;
 
@@ -10,22 +11,23 @@ import java.util.List;
 @Service
 public class DatasetService {
 
-    public void export(List<LogEvent> logs) throws IOException {
+    public void export(List<FeatureVector> dataset) throws IOException {
 
         FileWriter writer = new FileWriter("dataset.csv");
 
-        writer.write("timestamp,service,event,level,latency,requestId,error \n");
+        writer.write("errorCount,warnCount,infoCount,avgLatency,maxLatency,totalEvents,uniqueEvents,label\n");
 
-        for (LogEvent log : logs) {
+        for (FeatureVector f : dataset) {
 
             writer.write(
-                    log.getTimestamp() + "," +
-                            log.getService() + "," +
-                            log.getEvent() + "," +
-                            log.getLevel() + "," +
-                            log.getLatency() + "," +
-                            log.getRequestId() + "," +
-                            log.getErrorMessage() + "\n"
+                    f.getErrorCount() + "," +
+                            f.getWarnCount() + "," +
+                            f.getInfoCount() + "," +
+                            f.getAvgLatency() + "," +
+                            f.getMaxLatency() + "," +
+                            f.getTotalEvents() + "," +
+                            f.getUniqueEvents() + "," +
+                            f.getLabel() + "\n"
             );
         }
 
