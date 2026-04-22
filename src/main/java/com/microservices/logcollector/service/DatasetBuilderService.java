@@ -2,6 +2,7 @@ package com.microservices.logcollector.service;
 
 import com.microservices.logcollector.model.FeatureVector;
 import com.microservices.logcollector.model.LogEvent;
+import com.microservices.logcollector.storage.LogStorage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,8 @@ public class DatasetBuilderService {
 
     private final SlidingWindowService slidingWindowService;
     private final FeatureExtractionService featureExtractionService;
+    private final LabelingService labelingService;
+    private final LogStorage logStorage;
 
     public List<FeatureVector> buildDataset() {
 
@@ -30,6 +33,9 @@ public class DatasetBuilderService {
 
             dataset.add(features);
         }
+
+        //apply labels
+        labelingService.applyLabels(dataset, logStorage.getAll());
 
         return dataset;
     }
