@@ -21,4 +21,5 @@ public class FeatureVector {
 
     private int totalEvents;
     private int uniqueEvents;
+    private int label; // 0 for normal, 1 for anomaly
 }
