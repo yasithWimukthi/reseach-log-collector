@@ -14,9 +14,9 @@ public class LabelingService {
     public void applyLabels(List<FeatureVector> dataset,
                             List<LogEvent> allLogs) {
 
-        // Step 1: find failure timestamps
+        // ✅ Step 1: use TRUE failures only
         List<Instant> failureTimes = allLogs.stream()
-                .filter(log -> "ERROR".equalsIgnoreCase(log.getLevel()))
+                .filter(log -> "request_completed_failure".equals(log.getEvent()))
                 .map(log -> Instant.parse(log.getTimestamp()))
                 .toList();
 
@@ -29,7 +29,8 @@ public class LabelingService {
 
             for (Instant failureTime : failureTimes) {
 
-                Instant preFailureStart = failureTime.minus(Duration.ofMinutes(5));
+                // ✅ Step 2: smaller prediction window
+                Instant preFailureStart = failureTime.minus(Duration.ofMinutes(1));
 
                 if (!windowEnd.isBefore(preFailureStart) &&
                         !windowStart.isAfter(failureTime)) {
